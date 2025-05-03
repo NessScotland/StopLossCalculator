@@ -1,0 +1,97 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stop Loss Calculator</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            padding: 20px;
+            background: linear-gradient(to bottom right, #8fd3f4, #84fab0);
+            background-attachment: fixed;
+        }
+        .calculator {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 25px;
+            border-radius: 16px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+            max-width: 420px;
+            margin: auto;
+            text-align: center;
+        }
+        h2 {
+            color: #0077cc;
+            margin-bottom: 20px;
+        }
+        input[type="number"], select {
+            width: 90%;
+            padding: 12px;
+            margin-top: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+        }
+        button {
+            padding: 12px 20px;
+            margin-top: 15px;
+            font-size: 16px;
+            color: #fff;
+            background-color: #0077cc;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #005fa3;
+        }
+        .result {
+            margin-top: 20px;
+            font-weight: bold;
+            color: #333;
+            background-color: #f2f9ff;
+            padding: 15px;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="calculator">
+        <h2>Stop Loss Calculator</h2>
+        <label for="entryPrice">Entry Price ($):</label><br>
+        <input type="number" id="entryPrice" step="0.01"><br><br>
+
+        <label for="percentSelect">Stop Loss %:</label><br>
+        <select id="percentSelect">
+            <option value="5">5%</option>
+            <option value="6">6%</option>
+            <option value="7" selected>7%</option>
+            <option value="8">8%</option>
+            <option value="10">10%</option>
+        </select><br>
+
+        <button onclick="calculateStopLoss()">Calculate</button>
+        <div class="result" id="results"></div>
+    </div>
+
+    <script>
+        function calculateStopLoss() {
+            const entry = parseFloat(document.getElementById('entryPrice').value);
+            const percent = parseFloat(document.getElementById('percentSelect').value);
+            const resultBox = document.getElementById('results');
+
+            if (isNaN(entry)) {
+                resultBox.innerText = 'Please enter a valid number.';
+                resultBox.style.color = 'red';
+                return;
+            }
+
+            const stopLoss = (entry * (1 - percent / 100)).toFixed(2);
+            resultBox.style.color = '#333';
+            resultBox.innerHTML = `${percent}% Stop Loss: $${stopLoss}`;
+        }
+    </script>
+</body>
+</html>
